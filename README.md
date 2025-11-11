@@ -6,23 +6,25 @@ Predicting Employee churn and identifying key drivers of attrition using scalabl
 
 ### Problem Statement:
 
-Employee attrition poses a significant risk to organizational stability and workforce planning. This project focuses on predicting which employees are most likely to leave and uncovering the core reasons behind employees leaving organisation.
+This project focuses on predicting which employees are most likely to leave, store the important predictors from feature selection, SHAP and A/B Testing in Unity Catalog for Business to use it later for comparison and decisions. 
 
-By leveraging machine learning models, MLflow and  SHAP.  the goal is to empower HR teams with proactive insights—helping them improve retention through monitoring model metrics, reduce the cost of hiring, and design policies or strategies based on results from SHAP improving employee retention.
+By leveraging machine learning models, MLflow and  SHAP  the goal is to empower HR teams with proactive insights—helping them improve retention through monitoring model metrics. 
 
-**This is a complete, production-ready ML pipeline built on Databricks, covering:**
+### This is a complete, production-ready ML pipeline covering:**
 
-- Data Management with Unity Catalog (secure and versioned Delta tables)
+**- Data Management with Unity Catalog (secure and versioned Delta tables)**
 
-- Data Cleaning and Collection. 
+**- Data Cleaning and Collection** 
 
-- Exploratory Data Analysis to uncover attrition trends by Job Role, Job Level, Income, Career Trajectory and Satisfaction level. 
+**- Exploratory Data Analysis to capture attrition trends (Based on Demographics, Career Trajectory, Growth Opportunites and Organisation Culture)** 
 
-- Data Preprocessing (Data Transformation and Feature Selection using Chi-Square and T-test).
+**-Data Preprocessing (Data Transformation and Feature Selection using Chi-Square and T-test)**
   
-- Model training, testing with Logistic Regression, Random Forest XGBoost and Model monitoring and tracking using MLflow (parameters, metrics, artifacts, comparison)
+**- Model training, testing with Logistic Regression, Random Forest XGBoost and Evaluation**
 
-- Each stage of the pipeline was built for reproducibility, scalability, and used SHAP for interpretability.
+**- Model monitoring and tracking using MLflow (parameters, metrics, artifacts, comparison).**
+
+Each stage of the pipeline was built for reproducibility, scalability, and used SHAP for interpretability.
 
 ---
 
@@ -42,8 +44,6 @@ By leveraging machine learning models, MLflow and  SHAP.  the goal is to empower
 
 <img width="374" height="230" alt="Screenshot 2025-10-18 at 20 12 23" src="https://github.com/user-attachments/assets/93c8a4ad-3f8a-44ad-9047-a518e9c2deff" />
 
-
-
 ---
 
 ### Unity Catalog for Data Storage and Access Control:
@@ -51,7 +51,6 @@ By leveraging machine learning models, MLflow and  SHAP.  the goal is to empower
 Created a Catalog (`ml_catalog`) and schema (`ml_schema`) under a managed volume to store both the complete dataset and the training subset in Delta format. This structure enables governed, scalable, and versioned access to data for the ML workflow.
 
 ---
-
 
 ### Data Visualization:
 
@@ -100,11 +99,7 @@ To address this, we apply the log1p transformation, which compresses large value
 
 **Chi- Square Testing:** 
 
-
-
 <img width="467" height="332" alt="Screenshot 2025-10-07 at 16 21 23" src="https://github.com/user-attachments/assets/037310da-d9a0-41fa-8fc4-e888bc511620" />
-
-
 
 **T-Test:**
 
@@ -112,10 +107,7 @@ To address this, we apply the log1p transformation, which compresses large value
 <img width="456" height="311" alt="Screenshot 2025-10-07 at 16 21 37" src="https://github.com/user-attachments/assets/6e12b45b-4d18-4116-93dc-07e8f57f9bad" />
 
 
-
 <img width="445" height="315" alt="Screenshot 2025-10-07 at 16 21 44" src="https://github.com/user-attachments/assets/6deb6d5d-e261-4cf7-8be8-3d75ac1c8883" />
-
-
 
 
 The t-test and chi-square analyses were conducted to examine relationships between various features and employee attrition.
@@ -126,51 +118,37 @@ This indicates that these variables, when considered individually, do not have a
 
 To ensure only statistically significant features contribute to the model, univariate feature selection was applied, both the tables are stored in **Unity Catalog**.
 
+
+- Logistic regression with L1 and L2 Penality, and class weight balanced to account for coefficents and features.
+- Random forest classiffier with hyperparamters like max_depth, n_estimators which will help us to generalize well, and deal with variance and overfitting. 
+- Xgboost Classifier to deal with complex data points. 
+
+
+
 ---
 
-## 🚀 Model Experimentation:
-
+## 🚀 Model Experimentation using MLFLOW**
 
 Setting the Experimentation inside Databricks Notebook. 
 
 <img width="1039" alt="Experimentation" src="https://github.com/user-attachments/assets/a927d8d0-5ea7-4e53-8365-fdb842b5bd62" />
 
----
-
-
-## 📈 Model Training & Evaluation using MLflow
-
-
-This centralized tracking ensured experiment reproducibility, hyperparameter versioning, and performance benchmarking.
+This centralized tracking ensured experiment reproducibility and logging Hyperparameter from models, metrics, artifacts and model versioning. 
 Logged key hyperparameters, evaluation metrics, trained model and visual artifacts like confusion matrix for every run — making it easy to reproduce or explain later.
 
 <img width="1030" height="317" alt="Screenshot 2025-10-18 at 20 17 42" src="https://github.com/user-attachments/assets/e61b2a07-5f45-4808-9bd1-34e19743142a" />
 
-
-
-We trained three different models, Logistic regression with L1 and L2 Penality, and class weight balanced to account for coefficents and features.
-Random forest classiffier with hyperparamters like max_depth, n_estimators which will help us to generalize well, and deal with  variance and overfitting. 
-Xgboost Classifier to deal with complex data points. 
-
 ---
 
-
-### MLflow Metrics and Summary: 
+### MLflow Metrics and Dashboard:  
 
 As we can see screenshot below from Databricks MLFlow UI with Run Name, Duration of each Run and metrics logged. 
 
-Used the MLflow UI in Databricks to compare multiple runs of Logistic Regression, Random Forest, and XGBoost. Selected the best model based on precision-recall trade-off and registered it using Model Registry in databricks to serve it later for deployment and making production level predictions.
-
-<img width="1264" height="440" alt="Screenshot 2025-10-07 at 11 25 24" src="https://github.com/user-attachments/assets/1ef7910e-319a-4d11-9ffd-5691308bcfb8" />
-
-
-### MLFlow Tracking Dashboard:
-
-
-I tracked and compared multiple models — Logistic Regression, Random Forest, and XGBoost — using MLflow. 
+Used the MLflow UI in Databricks to compare multiple runs of Logistic Regression, Random Forest, and XGBoost. 
 
 Each dashboard recorded: adjusted_f1, adjusted_precision, adjusted_recall, precision, recall and f1 score. 
 
+<img width="1264" height="440" alt="Screenshot 2025-10-07 at 11 25 24" src="https://github.com/user-attachments/assets/1ef7910e-319a-4d11-9ffd-5691308bcfb8" />
 
 <img width="908" height="363" alt="Screenshot 2025-10-07 at 07 30 50" src="https://github.com/user-attachments/assets/fcd14556-35a6-40a7-a289-db8e17fb9729" />
 
@@ -180,57 +158,42 @@ Each dashboard recorded: adjusted_f1, adjusted_precision, adjusted_recall, preci
 
 ### Model Serving and Registry: 
 
+Registered model using Model Registry in databricks to serve it later for deployment for making real time predictions.
+
 I've provided signatures examples to be used by registered and served model for making predictions at endpoint in JSON format. 
 
 <img width="632" height="227" alt="Screenshot 2025-10-18 at 20 46 12" src="https://github.com/user-attachments/assets/30af9741-4000-4161-b440-9446459431aa" />
 
 ---
 
-### Model Interpretibility and Explainabilty:
-
-
-
-
-
 ## Conclusion:
 
 - After evaluating multiple models—including Logistic Regression, Xgboost and Random Forest (with maximum depth of 6 and n_estimators of 200) emerged as the best-performing model for our attrition prediction task. With a tuned threshold of 0.33, it struck an effective balance between interpretability, performance, and generalization. 
-
 - The model achieved a recall of 82% and precision of 44% on detecting attrition, which is crucial for early risk detection while minimizing false positives that may harm employee trust.
 - Unity Catalog ensures secure, governed, and scalable data access.
 - SHAP explainability provides transparency into model decisions.
-- MLflow ensures experiment reproducibility and tracking for deployment.
+- MLflow ensures experiment reproducibility, loggging and tracking for deployment.
   
 ---
 
-### High-Risk Factors:
+### High-Risk Factors and Recommendation:**
 
-- Overtime, Low job satisfaction and Poor work-life balance
-- Employees with long commutes or frequent travel.
-- Those with limited growth, low income or recognition.
-
-**Recommendation:**
-
-- Monitor satisfaction & workload regularly
-
-- Design retention bonuses or stock options
-
-- Improve manager engagement programs
-
-- Enable flexible work or hybrid policies
-
+- Overtime, Low job satisfaction and Poor work-life balance - Monitor satisfaction & workload monthly.
+- Employees with long commutes or frequent travel - Enable flexible work or hybrid policies.
+- Employees with limited growth, low income or recognition  - Design retention bonuses or stock options.
+   
 --- 
 
 ### Future Scope:
 
 - Automating retraining via Databricks Jobs and retraining with 50,000 row making inference on Production level data. 
-
 - AI Agent for Attrition Predictions, giving alerts on employee sentiments and recommending strategies. 
 
+---
 
 ### Tech Stack:
 
-- **Languages**: Python, SQL  
+- **Languages**: Python  
 - **Libraries**: `pandas`, `numpy`, `scikit-learn`, `matplotlib`, `seaborn`, `mlflow`, `shap`  
 - **Platform**: Databricks  
 - **Version Control & Tracking**: MLflow. 
@@ -241,7 +204,5 @@ I've provided signatures examples to be used by registered and served model for 
 git clone https://github.com/<ShivaniKanodia>/employee-attrition-mlpipeline.git
 cd employee-attrition-mlpipeline
 
-
 ### 📦 Install Python dependencies
 pip install -r requirements.txt
-
