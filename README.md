@@ -1,22 +1,22 @@
 ## Workforce Attrition Prediction with Explainable and Reproducible ML
 
-Predicting Employee churn and identifying key drivers of attrition using scalable machine learning practices. Built with classification and booster algorithms, SHAP for explainability and trustworthy insights, Used Unity Catalog to store models and feature, and MLflow for experiment tracking, model reproducibility and transparency.
+Predicting Employee churn and identifying key drivers of attrition using scalable machine learning practices. 
+Built with classification and booster algorithms, SHAP for explainability and trustworthy insights
+Used Unity Catalog to store models and features, and MLflow for experiment tracking, model reproducibility and transparency.
 
 ---
 
 ### Problem Statement:
 
-This project focuses on predicting which employees are most likely to leave, store the important predictors from feature selection, SHAP and A/B Testing in Unity Catalog for Business to use it later for comparison and decisions. 
+This project focuses on predicting which employees are most likely to leave, store the important predictors from feature selection, SHAP and A/B Testing in Unity Catalog for Business to use it later for comparison and decisions.  By leveraging machine learning models, MLflow and  SHAP  the goal is to empower HR teams with proactive insights—helping them improve retention through monitoring model metrics. 
 
-By leveraging machine learning models, MLflow and  SHAP  the goal is to empower HR teams with proactive insights—helping them improve retention through monitoring model metrics. 
-
-## This is a complete, production-ready ML pipeline covering:
+## ML pipeline covering:
 
 **Data Management with Unity Catalog (secure and versioned Delta tables)**
 
 **Data Cleaning and Collection** 
 
-**Exploratory Data Analysis to capture attrition trends (Based on Demographics, Career Trajectory, Growth Opportunites and Organisation Culture)** 
+**Exploratory Data Analysis**
 
 **Data Preprocessing (Data Transformation and Feature Selection using Chi-Square and T-test)**
   
@@ -32,8 +32,9 @@ Each stage of the pipeline was built for reproducibility, scalability, and used 
 
 - **Total records**: 1,470 employees
 - **Attributes**: Demographics, Job Role, Satisfaction levels, Performance metrics etc.
-- Checked Unique values in each category to see frequency of different categories and its distribution. 
-
+-  Checked Unique values in each category to see frequency of different categories and its distribution.
+-  Identified missing values and empty strings using insull.sum()
+-  
 ---
 
 ### Unity Catalog for Data Storage and Access Control:
@@ -42,9 +43,9 @@ Created a Catalog (`ml_catalog`) and schema (`ml_schema`) under a managed volume
 
 ---
 
-### Data Visualization:
+## DATA VISUALIZATION:
 
-**1. Data Distribution by Department, Job Role and Job level:**
+**1.DATA DISTRIBUTION BY DEPARTMENT, JOB ROLE AND JOB LEVEL:**
 
 
 <img width="578" height="455" alt="Screenshot 2025-10-07 at 16 19 49" src="https://github.com/user-attachments/assets/cb57e4bb-2196-430d-a544-9110b76b954f" />
@@ -56,7 +57,7 @@ Created a Catalog (`ml_catalog`) and schema (`ml_schema`) under a managed volume
 <img width="583" height="344" alt="Screenshot 2025-10-07 at 16 20 13" src="https://github.com/user-attachments/assets/bd07642a-17d8-4b89-aa9a-a2eb284a6d36" />
 
 
-**2. Skewness and Outliers:**
+**2.SKEWNESS AND OUTLIERS:**
 
 
 <img width="512" height="625" alt="Screenshot 2025-10-07 at 16 20 34" src="https://github.com/user-attachments/assets/1b17bdc2-a6a7-4ce0-b992-dda22b0a0bcf" />
@@ -68,12 +69,14 @@ Created a Catalog (`ml_catalog`) and schema (`ml_schema`) under a managed volume
 <img width="487" height="320" alt="Screenshot 2025-10-07 at 16 21 00" src="https://github.com/user-attachments/assets/48b74cab-051f-43b2-b3f6-8d4cda8e127d" />
 
 
-Features such as Distance from Home, Monthly Income, Years at Company, Years Since Last Promotion, and Total Working Years show right-skewed distributions, with most values concentrated on the lower end and a few large outliers. This skewness can negatively affect model performance.
+Features such as Distance from Home, Monthly Income, Years at Company, Years Since Last Promotion, and Total Working Years show right-skewed distributions, with most values concentrated on the lower end. Used log1p for transformation. 
  
 
 ## FEATURE SELECTION:
 
-### Chi-Square Test and T-Test**
+Capture attrition trends (Based on Demographics, Career Trajectory, Growth Opportunites and Organisation Culture). 
+
+### Chi-Square Test and T-Test:
 
 <img width="467" height="332" alt="Screenshot 2025-10-07 at 16 21 23" src="https://github.com/user-attachments/assets/037310da-d9a0-41fa-8fc4-e888bc511620" />
 
@@ -102,18 +105,17 @@ Setting the Experimentation inside Databricks Notebook.
 This centralized tracking ensured experiment reproducibility and logging Hyperparameter from models, metrics, artifacts and model versioning. 
 Logged key hyperparameters, evaluation metrics, trained model and visual artifacts like confusion matrix for every run — making it easy to reproduce or explain later.
 
-
 ---
 
-### MLflow Metrics and Dashboard:  
+### MLflow METRICS AND DASHBOARD:  
 
-As we can see screenshot below from Databricks MLFlow UI with Run Name, Duration of each Run and metrics logged. 
+As we can see screenshot below from Databricks MLFlow UI with Run Name, Duration of each Run and metrics logged.  Used the MLflow UI in Databricks to compare multiple runs of Logistic Regression, Random Forest, and XGBoost. 
 
-Used the MLflow UI in Databricks to compare multiple runs of Logistic Regression, Random Forest, and XGBoost. 
-
-Each dashboard recorded: adjusted_f1, adjusted_precision, adjusted_recall, precision, recall and f1 score. 
 
 <img width="1264" height="440" alt="Screenshot 2025-10-07 at 11 25 24" src="https://github.com/user-attachments/assets/1ef7910e-319a-4d11-9ffd-5691308bcfb8" />
+
+
+Each dashboard recorded: adjusted_f1, adjusted_precision, adjusted_recall, precision, recall and f1 score. 
 
 <img width="908" height="363" alt="Screenshot 2025-10-07 at 07 30 50" src="https://github.com/user-attachments/assets/fcd14556-35a6-40a7-a289-db8e17fb9729" />
 
@@ -121,17 +123,17 @@ Each dashboard recorded: adjusted_f1, adjusted_precision, adjusted_recall, preci
 
 ---
 
-### Model Serving and Registry: 
+### MODEL SERVING AND REGISTRY: 
 
 Registered model using Model Registry in databricks to serve it later for deployment for making real time predictions.
 
-I've provided signatures examples to be used by registered and served model for making predictions at endpoint in JSON format. 
+provided signatures examples to be used by registered and served model for making predictions at endpoint in JSON format. 
 
 <img width="632" height="227" alt="Screenshot 2025-10-18 at 20 46 12" src="https://github.com/user-attachments/assets/30af9741-4000-4161-b440-9446459431aa" />
 
 ---
 
-## Conclusion:
+### Conclusion:
 
 - After evaluating multiple models—including Logistic Regression, Xgboost and Random Forest (with maximum depth of 6 and n_estimators of 200) emerged as the best-performing model for our attrition prediction task. With a tuned threshold of 0.33, it struck an effective balance between interpretability, performance, and generalization. 
 - The model achieved a recall of 82% and precision of 44% on detecting attrition, which is crucial for early risk detection while minimizing false positives that may harm employee trust.
@@ -141,7 +143,7 @@ I've provided signatures examples to be used by registered and served model for 
   
 ---
 
-### High-Risk Factors and Recommendation:**
+### HIGH RISK FACTORS FROM MODEL AND RECOMMENDATIONS TO HR TEAMS: 
 
 - Overtime, Low job satisfaction and Poor work-life balance - Monitor satisfaction & workload monthly.
 - Employees with long commutes or frequent travel - Enable flexible work or hybrid policies.
