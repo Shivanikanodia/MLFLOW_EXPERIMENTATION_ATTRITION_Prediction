@@ -34,7 +34,7 @@ Each stage of the pipeline was built for reproducibility, scalability, and used 
 - **Attributes**: Demographics, Job Role, Satisfaction levels, Performance metrics etc.
 -  Checked Unique values in each category to see frequency of different categories and its distribution.
 -  Identified missing values and empty strings using insull.sum()
--  
+  
 ---
 
 ### Unity Catalog for Data Storage and Access Control:
