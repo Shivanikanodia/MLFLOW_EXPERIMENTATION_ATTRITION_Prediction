@@ -135,7 +135,7 @@ provided signatures examples to be used by registered and served model for makin
 ### Conclusion:
 
 - After evaluating multiple models—including Logistic Regression, Xgboost and Random Forest (with maximum depth of 6 and n_estimators of 200) emerged as the best-performing model for our attrition prediction task. With a tuned threshold of 0.33, it struck an effective balance between interpretability, performance, and generalization. 
-- The model achieved a recall of 82% and precision of 44% on detecting attrition, which is crucial for early risk detection while minimizing false positives that may harm employee trust.
+- The model achieved a recall of 82% and precision of 70% on detecting attrition, which is crucial for early risk detection while minimizing false positives that may harm employee trust.
 - Unity Catalog ensures secure, governed, and scalable data access.
 - SHAP explainability provides transparency into model decisions.
 - MLflow ensures experiment reproducibility, loggging and tracking for deployment.
